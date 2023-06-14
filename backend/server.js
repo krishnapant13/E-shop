@@ -1,4 +1,5 @@
 const app = require("./app");
+const connectDatabase = require("./db/database");
 
 // Handling uncought exception
 process.on("uncaughtException", (err) => {
@@ -13,11 +14,12 @@ if (process.env.NODE_ENV !== "PROFUCTION") {
   });
 }
 
+//connect db
+connectDatabase();
+
 //creating a server
 const server = app.listen(process.env.PORT, () => {
-  console.log(
-    `server is running on http://localhost:${process.env.PORT}`
-  );
+  console.log(`server is running on http://localhost:${process.env.PORT}`);
 });
 
 //unhandled promise rejection
