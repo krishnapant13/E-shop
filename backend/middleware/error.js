@@ -3,7 +3,7 @@ module.exports = (err, req, res) => {
   err.statusCode = err.statusCode || 500;
   err.message = err.message || "Internal Server Error";
   // wrong mongo id error
-  if (error.name === "CastError") {
+  if (err.name === "CastError") {
     const message = `Resources not found with this id .. Invalid ${err.path}`;
     err = new ErrorHandler(message, 400);
   }
@@ -25,8 +25,8 @@ module.exports = (err, req, res) => {
     const message = `Your url is expired please try to re-create the link`;
     err = new ErrorHandler(message, 400);
   }
-  res.status(err.statusCode).json({
-    success: false,
-    message: err.message,
-  });
+  // res.status(err.statusCode).json({
+  //   success: false,
+  //   message: err.message,
+  // });
 };
