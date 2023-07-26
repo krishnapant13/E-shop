@@ -16,14 +16,16 @@ app.use(
   })
 );
 //config
-if (process.env.NODE_ENV !== "PROFUCTION") {
+if (process.env.NODE_ENV !== "PRODUCTION") {
   require("dotenv").config({
     path: "backend/config/.env",
   });
 }
 // import routes
-const user = require("./controller/user");
+const user = require("./controller/user")
+const shop = require("./controller/shop")
 app.use("/api/v2/user", user);
+app.use("/api/v2/shop", shop);
 
 //error handling
 app.use(ErrorHandler);

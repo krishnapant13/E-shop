@@ -7,7 +7,7 @@ const Drowpdown = ({ categoriesData, setDropDown }) => {
   const handleSubmit = (i) => {
     navigate(`/products?category=${i.title}`);
     setDropDown(false);
-    window.location.reload();
+    window.location.reload(true);
   };
   return (
     <div className="pb-4 w-[270px] h-[400px] overflow-scroll bg-[#fff] absolute z-30 rounded-b-md shadow-sm ">
