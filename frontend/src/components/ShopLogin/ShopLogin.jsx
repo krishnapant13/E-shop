@@ -5,8 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { server } from "../../server";
 import { toast } from "react-toastify";
 import axios from "axios";
-
-const Login = () => {
+const ShopLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [visible, setVisibility] = useState(false);
@@ -15,7 +14,7 @@ const Login = () => {
     e.preventDefault();
     await axios
       .post(
-        `${server}/user/login-user`,
+        `${server}/shop/login-shop`,
         {
           email,
           password,
@@ -23,23 +22,19 @@ const Login = () => {
         { withCredentials: true }
       )
       .then((res) => {
-        toast.success("Login Success");
-        navigate("/");
+        toast.success("Shop Login Success");
+        navigate("/dashboard");
         window.location.reload(true);
       })
       .catch((err) => {
-        if (err.response && err.response.data && err.response.data.message) {
-          toast.error(err.response.data.message);
-        } else {
-          toast.error("An error occurred.");
-        }
+        toast.error(err.response.data.message);
       });
   };
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Login to your account
+          Login to your shop
         </h2>
       </div>
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
@@ -131,7 +126,7 @@ const Login = () => {
             </div>
             <div className={`${styles.normalFlex} w-full`}>
               <h4>Don't have an account?</h4>
-              <Link to="/sign-up" className="text-blue-600 pl-2">
+              <Link to="/shop-create" className="text-blue-600 pl-2">
                 Sign Up
               </Link>
             </div>
@@ -142,4 +137,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ShopLogin;

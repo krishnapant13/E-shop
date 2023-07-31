@@ -9,12 +9,19 @@ const SellerActivation = () => {
     if (activation_token) {
       const activationEmail = async () => {
         try {
-          const res = await axios.post(`${server}/seller/activation`, {
+          const res = await axios.post(`${server}/shop/activation`, {
             activation_token,
           });
-          console.log(res.data.message);
         } catch (error) {
-          console.log(error.response.data.message);
+          if (
+            error.response &&
+            error.response.data &&
+            error.response.data.message
+          ) {
+            console.log(error.response.data.message);
+          } else {
+            console.log("An unknown error occurred.");
+          }
           setError(true);
         }
       };
