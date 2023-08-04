@@ -28,7 +28,7 @@ const ProductDetailsCard = ({ setOpen, data }) => {
           <div className="w-[90%] 800px:w-[60%] h-[90vh] overflow-y-scroll 800px:h-[75%] bg-white rounded-md shadow-sm relative p-4 ">
             <RxCross1
               size={20}
-              className="absolute right-2 top-2 z-50"
+              className="sticky right-2 top-2 z-50"
               onClick={() => setOpen(false)}
             />
             <div className="block w-[100%] 800px:flex">

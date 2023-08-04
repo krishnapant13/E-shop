@@ -49,7 +49,6 @@ const Header = ({ activeHeading }) => {
     axios
       .get(`${server}/user/logout`, { withCredentials: true })
       .then((res) => {
-        console.log(res);
         toast.success(res);
         navigate("/login");
         window.location.reload(true);
@@ -80,7 +79,7 @@ const Header = ({ activeHeading }) => {
         <div className="hidden 800px:h-[50px] 800px:my-[20px] 800px:flex item-center justify-between items-center ">
           <div className="w-[5%]">
             <Link to="/">
-              <img className="rounded-full " src={logo}></img>
+              <img className="rounded-full " src={logo} alt=""></img>
             </Link>
           </div>
           {/* search box */}
@@ -110,6 +109,7 @@ const Header = ({ activeHeading }) => {
                           <img
                             src={i.image_Url[0].url}
                             className="w-[40px] h-[40px] mr-[10px]"
+                            alt=""
                           />
                           <h1>{i.name}</h1>
                         </div>
@@ -249,7 +249,7 @@ const Header = ({ activeHeading }) => {
           </div>
           <div className="w-[9%] mt-2 cursor-pointer">
             <Link to="/">
-              <img className="rounded-full " src={logo}></img>
+              <img className="rounded-full " src={logo} alt=""></img>
             </Link>
           </div>
           <div>
@@ -302,6 +302,7 @@ const Header = ({ activeHeading }) => {
                             <img
                               src={i.image_Url[0].url}
                               className="w-[40px] h-[40px] mr-[10px]"
+                              alt=""
                             />
                             <h1>{i.name}</h1>
                           </div>

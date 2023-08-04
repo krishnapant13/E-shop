@@ -154,10 +154,11 @@ router.get(
 
 //logout Shop
 router.get(
-  "seller/logout",
+  "/logout",
   catchAsyncErrors(async (req, res, next) => {
+    console.log("this");
     try {
-      res.cookie("token", null, {
+      res.cookie("seller_token", null, {
         expires: new Date(Date.now()),
         httpOnly: true,
       });

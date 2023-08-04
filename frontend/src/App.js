@@ -14,9 +14,13 @@ import {
   ProductsDetailsPage,
   ProfilePage,
   ShopCreatePage,
-  ShopLoginPage
+  ShopLoginPage,
 } from "./routes/Routes";
-import {ShopDashboardPage} from "./routes/ShopRoutes"
+import {
+  ShopDashboardPage,
+  ShopCreateProduct,
+  ShopAllProducts,
+} from "./routes/ShopRoutes";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -24,6 +28,7 @@ import Store from "./redux/store";
 import { loadSeller, loadUser } from "./redux/actions/user";
 import { ShopHomePage } from "./routes/ShopRoutes.js";
 import SellerProtectedRoute from "./routes/SellerProtectedRoute";
+import Loader from "./components/Layout/Loader";
 const App = () => {
   useEffect(() => {
     Store.dispatch(loadUser());
@@ -73,6 +78,22 @@ const App = () => {
           element={
             <SellerProtectedRoute>
               <ShopDashboardPage />
+            </SellerProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard-create-product"
+          element={
+            <SellerProtectedRoute>
+              <ShopCreateProduct />
+            </SellerProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard-products"
+          element={
+            <SellerProtectedRoute>
+              <ShopAllProducts />
             </SellerProtectedRoute>
           }
         />
