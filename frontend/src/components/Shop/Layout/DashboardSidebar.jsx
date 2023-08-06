@@ -37,9 +37,9 @@ const sidebarItems = [
     text: "All Events",
   },
   {
-    to: "/dashboard-all-events",
+    to: "/dashboard-create-event",
     icon: VscNewFile,
-    text: "Create Events",
+    text: "Create Event",
   },
   {
     to: "/dashboard-withdraw-money",

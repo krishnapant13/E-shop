@@ -10,6 +10,7 @@ const Loader = () => {
     rendererSettings: {
       preserveAspectRatio: "xMidYMid slice",
     },
+    speed: 2,
   };
   return (
     <div className="w-full h-screen flex items-center justify-center">

@@ -2,45 +2,45 @@ import { createReducer } from "@reduxjs/toolkit";
 
 const initialState = {
   isLoading: true,
-  seller: null,
+  event: null,
   error: null,
 };
 
-export const productReducer = createReducer(initialState, {
-  productCreateRequest: (state) => {
+export const eventReducer = createReducer(initialState, {
+  eventCreateRequest: (state) => {
     state.isLoading = true;
   },
-  productCreateSuccess: (state, action) => {
+  eventCreateSuccess: (state, action) => {
     state.isLoading = false;
-    state.product = action.payload;
+    state.event = action.payload;
     state.success = true;
   },
-  productCreateFail: (state, action) => {
+  eventCreateFail: (state, action) => {
     state.isLoading = false;
     state.error = action.payload;
     state.success = false;
   },
-  // get all products of shop
-  getAllProductShopRequest: (state) => {
+  // get all events of shop
+  getAllEventsRequest: (state) => {
     state.isLoading = true;
   },
-  getAllProductShopSuccess: (state, action) => {
+  getAllEventsSuccess: (state, action) => {
     state.isLoading = false;
-    state.products = action.payload;
+    state.events = action.payload;
   },
-  getAllProductShopFail: (state, action) => {
+  getAllEventsFail: (state, action) => {
     state.isLoading = false;
     state.error = action.payload;
   },
-  //delete product of shop
-  deleteProductRequest: (state) => {
+  //delete event of shop
+  deleteEventRequest: (state) => {
     state.isLoading = true;
   },
-  deleteProductSuccess: (state, action) => {
+  deleteEventSuccess: (state, action) => {
     state.isLoading = false;
     state.message = action.payload
   },
-  deleteProductFailed: (state, action) => {
+  deleteEventFailed: (state, action) => {
     state.isLoading = false;
     state.error = action.payload
   },

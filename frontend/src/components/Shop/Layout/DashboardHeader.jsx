@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import logo from "../../../assets/logo/logo.jpeg";
@@ -10,6 +10,10 @@ import { backend_url } from "../../../server";
 
 const DashboardHeader = () => {
   const { seller } = useSelector((state) => state.seller);
+  const [welcomeText, setWelcomeText] = useState(true);
+  setTimeout(() => {
+    setWelcomeText(false);
+  }, 5000);
   return (
     <div className="w-full h=[80px] bg-white shadow sticky top-0 left-0 z-30 flex items-center justify-between px-4 ">
       <div className="w-[5.5%] m-2">
@@ -17,6 +21,11 @@ const DashboardHeader = () => {
           <img className="rounded-full " src={logo} alt=""></img>
         </Link>
       </div>
+      {welcomeText && (
+        <h3 className={`font-[500] text-[30px] font-Poppins text-left `}>
+          Welcome to {seller.name}
+        </h3>
+      )}
       <div className="flex items-center ">
         <div className="flex items-center mr-4">
           <Link to="/dashboard/coupons" className="800px:block hidden">

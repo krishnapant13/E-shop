@@ -25,7 +25,7 @@ router.post("/create-shop", upload.single("file"), async (req, res, next) => {
 
     if (sellerEmail) {
       const filename = req.file.filename;
-      const filePath = `upload/${filename}`;
+      const filePath = `uploads/${filename}`;
       fs.unlink(filePath, (err) => {
         if (err) {
           console.log("File not found", err);
@@ -156,7 +156,6 @@ router.get(
 router.get(
   "/logout",
   catchAsyncErrors(async (req, res, next) => {
-    console.log("this");
     try {
       res.cookie("seller_token", null, {
         expires: new Date(Date.now()),
@@ -165,6 +164,22 @@ router.get(
       res.status(201).json({
         success: true,
         message: "Logout Successful",
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
+//logout Shop
+router.get(
+  "/get-shop-info/:id",
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const shop = await Shop.findById(req.params.id);
+      res.status(201).json({
+        success: true,
+        shop,
       });
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));
