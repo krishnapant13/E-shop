@@ -11,11 +11,11 @@ import {
   footerSupportLinks,
   footercompanyLinks,
 } from "../../static/data";
-import logo from "../../assets/logo/logo.jpeg"
+import logo from "../../assets/logo/logo.jpeg";
 const Footer = () => {
   return (
     <div className="bg-black text-white ">
-      <div className="md:flex md:justify-between md:items-center sm:px-12 px-4 bg-[#342ac8] py-7">
+      <div className="md:flex md:justify-between md:items-center bg-gradient-to-r from-blue-900 via-purple to-black sm:px-12 px-4  py-7">
         <h1 className="lg:text-4xl text-3xl md:mb-0 mb-6 lg:leading-normal font-semibold md:w-2/5 ">
           <span className="text-[#56d879]">Subscribe </span>
           us for get news <br />
@@ -38,11 +38,7 @@ const Footer = () => {
         <ul className="px-5 text-center sm:text-start flex sm:block flex-col  items-center ">
           <div className="w-[30%]">
             <Link to="/">
-              <img
-                className="rounded-full "
-                src={ logo }
-                alt=""
-              />
+              <img className="rounded-full " src={logo} alt="" />
             </Link>
           </div>
           <br />

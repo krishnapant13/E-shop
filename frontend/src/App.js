@@ -15,6 +15,7 @@ import {
   ProfilePage,
   ShopCreatePage,
   ShopLoginPage,
+  ShopPreviewPage,
 } from "./routes/Routes";
 import {
   ShopDashboardPage,
@@ -31,10 +32,16 @@ import Store from "./redux/store";
 import { loadSeller, loadUser } from "./redux/actions/user";
 import { ShopHomePage } from "./routes/ShopRoutes.js";
 import SellerProtectedRoute from "./routes/SellerProtectedRoute";
+import axios from "axios";
+import { server } from "./server";
+import { getAllProducts } from "./redux/actions/product";
+import { getAllEvents } from "./redux/actions/event";
 const App = () => {
   useEffect(() => {
     Store.dispatch(loadUser());
     Store.dispatch(loadSeller());
+    Store.dispatch(getAllProducts());
+    Store.dispatch(getAllEvents());
   }, []);
   return (
     <BrowserRouter>
@@ -43,7 +50,7 @@ const App = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/best-selling" element={<BestSelling />} />
         <Route path="/products" element={<Products />} />
-        <Route path="/product/:name" element={<ProductsDetailsPage />} />
+        <Route path="/product/:id" element={<ProductsDetailsPage />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/events" element={<Events />} />
         <Route path="/login" element={<LoginPage />} />
@@ -64,6 +71,7 @@ const App = () => {
           path="/seller/activation/:activation_token"
           element={<SellerActivationPage />}
         />
+        <Route path="/shop/preview/:id" element={<ShopPreviewPage />} />
         {/* shop routes */}
         <Route path="/shop-login" element={<ShopLoginPage />} />
         <Route path="/shop-create" element={<ShopCreatePage />} />

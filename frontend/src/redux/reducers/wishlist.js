@@ -5,7 +5,6 @@ const initialState = {
     ? JSON.parse(localStorage.getItem("wishlistItems"))
     : [],
 };
-
 export const wishlistReducer = createReducer(initialState, {
   addToWishlist: (state, action) => {
     const item = action.payload;

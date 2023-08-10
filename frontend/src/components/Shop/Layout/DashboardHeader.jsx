@@ -15,7 +15,7 @@ const DashboardHeader = () => {
     setWelcomeText(false);
   }, 5000);
   return (
-    <div className="w-full h=[80px] bg-white shadow sticky top-0 left-0 z-30 flex items-center justify-between px-4 ">
+    <div className="w-full h=[80px] bg-gradient-to-r from-orange-900 via-white to-green-700 shadow sticky top-0 left-0 z-30 flex items-center justify-between px-4 ">
       <div className="w-[5.5%] m-2">
         <Link to="/dashboard">
           <img className="rounded-full " src={logo} alt=""></img>
@@ -30,31 +30,31 @@ const DashboardHeader = () => {
         <div className="flex items-center mr-4">
           <Link to="/dashboard/coupons" className="800px:block hidden">
             <AiOutlineGift
-              color="#555"
+              color="#fff"
               size={30}
               className="mx-3 cursor-pointer"
             />
           </Link>
           <Link to="/dashboard-events" className="800px:block hidden">
             <MdOutlineLocalOffer
-              color="#555"
+              color="#fff"
               size={30}
               className="mx-3 cursor-pointer"
             />
           </Link>
           <Link to="/dashboard-products" className="800px:block hidden">
             <FiShoppingBag
-              color="#555"
+              color="#fff"
               size={30}
               className="mx-3 cursor-pointer"
             />
           </Link>
           <Link to="/dashboard-orders" className="800px:block hidden">
-            <FiPackage color="#555" size={30} className="mx-3 cursor-pointer" />
+            <FiPackage color="#fff" size={30} className="mx-3 cursor-pointer" />
           </Link>
           <Link to="/dashboard-messages" className="800px:block hidden">
             <BiMessageSquareDetail
-              color="#555"
+              color="#fff"
               size={30}
               className="mx-3 cursor-pointer"
             />

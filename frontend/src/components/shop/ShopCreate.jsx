@@ -17,7 +17,6 @@ const ShopCreate = () => {
   const [zipCode, setzipCode] = useState();
   const [visible, setVisibility] = useState(false);
   const [avatar, setAvatar] = useState();
-  const navigate = useNavigate();
 
   const handleFileInputChange = (e) => {
     const file = e.target.files[0];

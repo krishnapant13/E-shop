@@ -27,22 +27,22 @@ const Categories = () => {
         className={`${styles.section} bg-white p-6 rounded-lg mb-12`}
         id="categories"
       >
-        <div className="grid grid-cols-1 gap-[5px] md:grid-cols-2 md:gap-[10px] lg:grid-cols-4 lg:gap-[20px] xl:grid-cols-5 xl:gap-[30px] ">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-10 lg:grid-cols-4 lg:gap-20 xl:grid-cols-5 xl:gap-30">
           {categoriesData &&
             categoriesData.map((i) => {
-              const handleSubmit = (i) => {
+              const handleSubmit = () => {
                 navigate(`/products?category=${i.title}`);
               };
               return (
                 <div
-                  className="w-full h-[100px] flex items-center justify-between cursor-pointer overflow-hidden "
+                  className="w-full h-auto flex flex-col items-center justify-between cursor-pointer overflow-hidden p-4 transition duration-300 hover:shadow-neon rounded-lg"
                   key={i.id}
-                  onClick={() => handleSubmit(i)}
+                  onClick={handleSubmit}
                 >
-                  <h5 className={`text-[18px] leading-[1.3]`}>{i.title} </h5>
+                  <h5 className="text-18 leading-1.3 text-center">{i.title}</h5>
                   <img
                     src={i.image_Url}
-                    className="w-[120px] object-cover"
+                    className="w-120 object-cover mt-2"
                     alt=""
                   />
                 </div>

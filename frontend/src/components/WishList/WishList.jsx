@@ -1,81 +1,121 @@
 import React, { useState } from "react";
 import { RxCross1 } from "react-icons/rx";
-import { IoBagHandleOutline } from "react-icons/io5";
 import { BsCartPlus } from "react-icons/bs";
-import { Link } from "react-router-dom";
 import styles from "../../styles/styles";
-import { AiFillHeart } from "react-icons/ai";
+import { AiOutlineHeart } from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux";
+import { removeFromWishlist } from "../../redux/actions/wishlist";
+import { addTocart } from "../../redux/actions/cart";
+import { backend_url } from "../../server";
+import { Link } from "react-router-dom";
 
+const Wishlist = ({ setOpenWishlist }) => {
+  const { wishlist } = useSelector((state) => state.wishlist);
+  const dispatch = useDispatch();
 
-const WishList = ({ setOpenWishList }) => {
-  const wishlistData = [
-    {
-      name: "Iphone 14 pro max 8/256GB",
-      description: "test",
-      price: 999,
-    },
-    {
-      name: "Iphone 14 pro max 8/256GB",
-      description: "test",
-      price: 23,
-    },
-    {
-      name: "Iphone 14 pro max 8/256GB",
-      description: "test",
-      price: 23,
-    },
-  ];
+  const removeFromWishlistHandler = (data) => {
+    dispatch(removeFromWishlist(data));
+  };
+
+  const addToCartHandler = (data) => {
+    const newData = { ...data, qty: 1 };
+    dispatch(addTocart(newData));
+    setOpenWishlist(false);
+  };
+
   return (
     <div className="fixed top-0 left-0 w-full bg-[#0000004d] h-screen z-10 ">
-      <div className="fixed top-0 right-0 min-h-full w-[25%] bg-white flex flex-col justify-between  shadow-sm">
-        <div>
-          <div className="flex w-full justify-end pt-5 pr-5">
-            <RxCross1
-              size={20}
-              className="cursor-pointer font-bold "
-              onClick={() => setOpenWishList(false)}
-            />
+      <div className="fixed top-0 right-0 h-full w-[80%] overflow-y-scroll 800px:w-[25%] bg-white flex flex-col justify-between  shadow-sm">
+        {wishlist && wishlist.length === 0 ? (
+          <div className="w-full h-screen flex items-center justify-center">
+            <div className="flex w-full justify-end pt-5 pr-5 fixed top-3 right-3">
+              <RxCross1
+                size={25}
+                className="cursor-pointer"
+                onClick={() => setOpenWishlist(false)}
+              />
+            </div>
+            <h5>Wishlist Items is empty!</h5>
           </div>
-          {/* items lengthh */}
-          <div className={`${styles.normalFlex} p-4`}>
-            <AiFillHeart color="red" size={25} />
-            <h5 className="pl-2 text=[25px] font-[500] ">3 Items In Wishlist</h5>
-          </div>{" "}
-          <br />
-          {/* wishlist single items */}
-          <div className="w-full border-t overflow-scroll ">
-            {wishlistData &&
-              wishlistData.map((i, index) => <WishListSingle key={index} data={i} />)}
-          </div>
-        </div>
+        ) : (
+          <>
+            <div>
+              <div className="flex w-full justify-end pt-5 pr-5">
+                <RxCross1
+                  size={25}
+                  className="cursor-pointer"
+                  onClick={() => setOpenWishlist(false)}
+                />
+              </div>
+              {/* Item length */}
+              <div className={`${styles.normalFlex} p-4`}>
+                <AiOutlineHeart size={25} />
+                <h5 className="pl-2 text-[20px] font-[500]">
+                  {wishlist && wishlist.length} items
+                </h5>
+              </div>
+
+              {/* cart Single Items */}
+              <br />
+              <div className="w-full border-t">
+                {wishlist &&
+                  wishlist.map((i, index) => (
+                    <WishlistSingle
+                      key={index}
+                      data={i}
+                      removeFromWishlistHandler={removeFromWishlistHandler}
+                      addToCartHandler={addToCartHandler}
+                    />
+                  ))}
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
 };
-const WishListSingle = ({ data }) => {
+
+const WishlistSingle = ({
+  data,
+  removeFromWishlistHandler,
+  addToCartHandler,
+}) => {
   const [value, setValue] = useState(1);
-  const totalPrice = data.price * value;
+  const totalPrice = data.discountPrice * value;
   return (
     <div className="border-b p-4">
-      <div className="w-full flex items-center">
-        <RxCross1 size={10}/>
-        <img
-          src="https://bonik-react.vercel.app/assets/images/products/Fashion/Clothes/1.SilverHighNeckSweater.png"
-          className="w-[80px] h-[80px] ml-2 "
-          alt=""
+      <div className="w-full 800px:flex items-center justify-between">
+        <RxCross1
+          className="cursor-pointer 800px:mb-['unset'] 800px:ml-['unset'] mb-2 ml-2"
+          onClick={() => removeFromWishlistHandler(data)}
         />
-        <div className="pl-[5px]">
-          <h1>{data.name}</h1>
-          <h4 className=" font-[600] text-[17px] pt-[3px] text-[#d02222] font-Roboto ">
-            &#8377;{totalPrice}{" "}
-          </h4>
-        </div>
+        <Link to={`/product/${data._id}`} className="flex">
+          {" "}
+          <img
+            src={`${backend_url}${data?.images[0]}`}
+            alt=""
+            className="w-[95px] h-min ml-2 mr-2 rounded-[5px]"
+          />
+          <div className="pl-[5px]">
+            <h1>{data.name}</h1>
+            <h4 className="font-[600] pt-3 800px:pt-[3px] text-[17px] text-[#d02222] font-Roboto">
+              ₹ {totalPrice}
+            </h4>
+          </div>
+        </Link>
+
         <div>
-            <BsCartPlus size={20} classNames="cursor-pointer" title="Add to cart" />
+          <BsCartPlus
+            size={20}
+            className="cursor-pointer"
+            tile="Add to cart"
+            onClick={() => addToCartHandler(data)}
+          />
         </div>
       </div>
     </div>
   );
 };
 
-export default WishList;
+export default Wishlist;

@@ -2,8 +2,9 @@ import { createReducer } from "@reduxjs/toolkit";
 
 const initialState = {
   isLoading: true,
-  event: null,
+  events: null,
   error: null,
+  allEvents: null,
 };
 
 export const eventReducer = createReducer(initialState, {
@@ -12,7 +13,7 @@ export const eventReducer = createReducer(initialState, {
   },
   eventCreateSuccess: (state, action) => {
     state.isLoading = false;
-    state.event = action.payload;
+    state.events = action.payload;
     state.success = true;
   },
   eventCreateFail: (state, action) => {
@@ -38,12 +39,29 @@ export const eventReducer = createReducer(initialState, {
   },
   deleteEventSuccess: (state, action) => {
     state.isLoading = false;
-    state.message = action.payload
+    state.message = action.payload;
   },
   deleteEventFailed: (state, action) => {
     state.isLoading = false;
-    state.error = action.payload
+    state.error = action.payload;
   },
+  clearErrors: (state) => {
+    state.error = null;
+  },
+
+  // get all events
+  getAlleventsRequest: (state) => {
+    state.isLoading = true;
+  },
+  getAlleventsSuccess: (state, action) => {
+    state.isLoading = false;
+    state.allEvents = action.payload;
+  },
+  getAlleventsFailed: (state, action) => {
+    state.isLoading = false;
+    state.error = action.payload;
+  },
+
   clearErrors: (state) => {
     state.error = null;
   },

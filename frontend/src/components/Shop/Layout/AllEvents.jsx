@@ -1,9 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  deleteEvent,
-  getAllEventsShop,
-} from "../../../redux/actions/event";
+import { deleteEvent, getAllEventsShop } from "../../../redux/actions/event";
 import { Button } from "@mui/material";
 import { AiOutlineDelete, AiOutlineEye } from "react-icons/ai";
 import { Link } from "react-router-dom";
@@ -88,17 +85,13 @@ const AllEvents = () => {
         <DataFetchLoader />
       ) : (
         <div className="w-full mx-8 pt-1 mt-10 bg-white">
-          {events.length === 0 ? (
-            <DataFetchLoader animation={animationData}/>
-          ) : (
-            <DataGrid
-              rows={row}
-              columns={columns}
-              pageSize={10}
-              disableSelectionOnClick
-              autoHeight
-            />
-          )}
+          <DataGrid
+            rows={row}
+            columns={columns}
+            pageSize={10}
+            disableSelectionOnClick
+            autoHeight
+          />
         </div>
       )}
     </>

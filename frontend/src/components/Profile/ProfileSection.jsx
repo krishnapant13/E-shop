@@ -1,24 +1,30 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { styled } from "@mui/material/styles";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import { backend_url } from "../../server";
 import styles from "../../styles/styles";
 import { AiOutlineCamera } from "react-icons/ai";
-
+import { toast } from "react-toastify";
+import { updateUserInformation } from "../../redux/actions/user";
 const ProfileSection = () => {
-
-  const { user } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const { user, error } = useSelector((state) => state.user);
   const [name, setName] = useState(user && user.name);
   const [email, setEmail] = useState(user && user.email);
-  const [phoneNumber, setPhoneNumber] = useState(null);
-  const [zipCode, setZipCode] = useState(null);
-  const [addressOne, setAddressOne] = useState("");
-  const [addressTwo, setAddressTwo] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState(user && user.phoneNumber);
+  const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch({ type: "clearErrors" });
+    }
+  }, []);
+  console.log(user);
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(updateUserInformation(name, email, phoneNumber, password));
   };
   return (
     <div>
@@ -74,33 +80,13 @@ const ProfileSection = () => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={6} lg={6} xl={6}>
-                  <label className="block pb-2">Zip Code</label>
+                  <label className="block pb-2">Enter your password</label>
                   <input
-                    type="number"
+                    type="password"
                     className={`${styles.input} !w-[95%]`}
                     required
-                    value={zipCode}
-                    onChange={(e) => setZipCode(e.target.value)}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6} lg={6} xl={6}>
-                  <label className="block pb-2">Address 1</label>
-                  <input
-                    type="text"
-                    className={`${styles.input} !w-[95%]`}
-                    required
-                    value={addressOne}
-                    onChange={(e) => setAddressOne(e.target.value)}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6} lg={6} xl={6}>
-                  <label className="block pb-2">Address 2</label>
-                  <input
-                    type="text"
-                    className={`${styles.input} !w-[95%]`}
-                    required
-                    value={addressTwo}
-                    onChange={(e) => setAddressTwo(e.target.value)}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </Grid>
               </Grid>

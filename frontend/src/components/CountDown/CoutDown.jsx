@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+const CoutDown = ({ data }) => {
+  const { allEvents, isLoading } = useSelector((state) => state.events);
 
-const CoutDown = () => {
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -9,7 +11,7 @@ const CoutDown = () => {
     return () => clearTimeout(timer);
   });
   function calculateTimeLeft() {
-    const difference = +new Date("2023-07-28") - +new Date();
+    const difference = +new Date(data.endDate) - +new Date();
     let timeLeft = {};
     if (difference > 0) {
       timeLeft = {
