@@ -204,7 +204,7 @@ const ProductsDetails = ({ data }) => {
                   </div>
                 </div>
                 <div
-                  className={`${styles.button} !mt-6 !rounded !h-11 flex items-center`}
+                  className={`${styles.button} !mt-6 !rounded !h-11 flex items-center bg-gradient-to-r from-blue-900 via-purple to-black`}
                   onClick={() => addToCartHandler(data._id)}
                 >
                   <span className="text-white flex items-center">
@@ -230,7 +230,7 @@ const ProductsDetails = ({ data }) => {
                     </h5>
                   </div>
                   <div
-                    className={`${styles.button} bg-[#6443d1] mt-4 !rounded !h-11`}
+                    className={`${styles.button} bg-[#6443d1] mt-4 !rounded !h-11 bg-gradient-to-r from-blue-900 via-purple to-black`}
                     onClick={handleMessageSubmit}
                   >
                     <span className="text-white flex items-center">
@@ -380,7 +380,7 @@ const ProductDetailsInfo = ({
               </h5>
               <Link to={`/shop/preview/${data?.shop._id}`}>
                 <div
-                  className={`${styles.button} !rounded-[4px] !h-[39.5px] mt-3`}
+                  className={`${styles.button} !rounded-[4px] !h-[39.5px] mt-3 bg-gradient-to-r from-blue-900 via-purple to-black`}
                 >
                   <h4 className="text-white">Visit Shop</h4>
                 </div>

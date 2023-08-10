@@ -59,7 +59,9 @@ const ShopProfileData = ({ isOwner }) => {
           {isOwner && (
             <div>
               <Link to="/dashboard">
-                <div className={`${styles.button} !rounded-[4px] h-[42px]`}>
+                <div
+                  className={`${styles.button} !rounded-[4px] h-[42px] bg-gradient-to-r from-blue-900 via-purple to-black mr-2`}
+                >
                   <span className="text-[#fff]">Go Dashboard</span>
                 </div>
               </Link>

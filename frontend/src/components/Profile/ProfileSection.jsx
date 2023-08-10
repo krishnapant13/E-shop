@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import { backend_url } from "../../server";
+import { backend_url, server } from "../../server";
 import styles from "../../styles/styles";
 import { AiOutlineCamera } from "react-icons/ai";
 import { toast } from "react-toastify";
 import { updateUserInformation } from "../../redux/actions/user";
+import axios from "axios";
 const ProfileSection = () => {
   const dispatch = useDispatch();
   const { user, error } = useSelector((state) => state.user);
@@ -14,6 +15,7 @@ const ProfileSection = () => {
   const [email, setEmail] = useState(user && user.email);
   const [phoneNumber, setPhoneNumber] = useState(user && user.phoneNumber);
   const [password, setPassword] = useState("");
+  const [avatar, setAvatar] = useState(null);
 
   useEffect(() => {
     if (error) {
@@ -21,7 +23,25 @@ const ProfileSection = () => {
       dispatch({ type: "clearErrors" });
     }
   }, []);
-  console.log(user);
+  const handleImage = async (e) => {
+    const file = e.target.files[0];
+    setAvatar(file);
+    const formdata = new FormData();
+    formdata.append("image", e.target.files[0]);
+    await axios
+      .put(`${server}/user/update-avatar`, formdata, {
+        headers: {
+          "Content-type": "multipart/form-data",
+        },
+        withCredentials: true,
+      })
+      .then((res) => {
+        window.location.reload(true);
+      })
+      .catch((error) => {
+        toast.error(error);
+      });
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(updateUserInformation(name, email, phoneNumber, password));
@@ -33,11 +53,19 @@ const ProfileSection = () => {
           <div className="relative">
             <img
               className="h-40 w-40 rounded-full object-cover border-[3px] border-[#3ad132] "
-              src={`${backend_url}${user?.avatar}`}
+              src={`${backend_url}${user && user?.avatar}`}
               alt=""
             />
             <div className="w-[30px] h-[30px] bg-[#E3E9EE] rounded-full flex items-center justify-center cursor-pointer absolute bottom-[5px] right-[5px] ">
-              <AiOutlineCamera size={20} />
+              <input
+                type="file"
+                id="image"
+                className="hidden"
+                onChange={handleImage}
+              />
+              <label htmlFor="image">
+                <AiOutlineCamera size={20} />
+              </label>
             </div>
           </div>
         </div>{" "}

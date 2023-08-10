@@ -28,7 +28,7 @@ const Footer = () => {
             placeholder="Enter your email..."
             className="text-gray-800 sm:w-72 w-full sm:mr-5 mr-1 lg:mb-0 mb-4 py-2.5 rounded px-2 focus:outline-none "
           />
-          <button className="bg-[#56d879] hover:bg-teal-500 duration-300 px-5 py-2.5 rounded-md text-white md:w-auto w-full ">
+          <button className="bg-gradient-to-r from-teal-500 via-purple to-blue-900 hover:bg-teal-500 duration-300 px-5 py-2.5 rounded-md text-white md:w-auto w-full ">
             {" "}
             Submit
           </button>

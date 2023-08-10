@@ -263,7 +263,7 @@ const CreateEvent = () => {
             <input
               type="submit"
               value="Create Event"
-              className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 cursor-pointer focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 cursor-pointer focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-gradient-to-r from-blue-900 via-purple to-black text-white"
             />
           </div>
         </div>

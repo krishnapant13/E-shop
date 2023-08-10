@@ -18,7 +18,7 @@ import { addTocart } from "../../redux/actions/cart";
 import { backend_url } from "../../server";
 const ProductDetailsCard = ({ setOpen, data }) => {
   const { cart } = useSelector((state) => state.cart);
-  const { wishlist } = useSelector((state) => state.wishlist) ;
+  const { wishlist } = useSelector((state) => state.wishlist);
   const dispatch = useDispatch();
   const [count, setCount] = useState(1);
   const [click, setClick] = useState(false);
@@ -101,7 +101,7 @@ const ProductDetailsCard = ({ setOpen, data }) => {
                   </Link>
                 </div>
                 <div
-                  className={`${styles.button} bg-[#000] mt-4 rounded-[4px] h-11`}
+                  className={`${styles.button} bg-[#000] mt-4 !rounded-[4px] h-11 bg-gradient-to-r from-blue-900 via-purple to-black`}
                   onClick={handleMessageSubmit}
                 >
                   <span className="text-[#fff] flex items-center">
@@ -163,7 +163,7 @@ const ProductDetailsCard = ({ setOpen, data }) => {
                   </div>
                 </div>
                 <div
-                  className={`${styles.button} mt-6 rounded-[4px] h-11 flex items-center`}
+                  className={`${styles.button} mt-6 !rounded-[4px] h-11 flex items-center bg-gradient-to-r from-blue-900 via-purple to-black`}
                   onClick={() => addToCartHandler(data._id)}
                 >
                   <span className="text-[#fff] flex items-center">

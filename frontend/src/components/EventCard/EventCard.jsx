@@ -6,7 +6,7 @@ import { backend_url } from "../../server";
 const EventCard = ({ active, data }) => {
   return (
     <div
-      className={`w-full block bg-white h-[79.2vh] ${
+      className={`w-full block bg-white h-auto ${
         active ? "unset" : "mb-12"
       } lg:flex p-2`}
     >
