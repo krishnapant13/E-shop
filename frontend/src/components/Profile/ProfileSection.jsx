@@ -22,7 +22,7 @@ const ProfileSection = () => {
       toast.error(error);
       dispatch({ type: "clearErrors" });
     }
-  }, []);
+  }, [error]);
   const handleImage = async (e) => {
     const file = e.target.files[0];
     setAvatar(file);

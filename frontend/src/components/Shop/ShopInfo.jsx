@@ -36,16 +36,16 @@ const ShopInfo = ({ isOwner }) => {
     window.location.reload(true);
   };
   const totalReviewsLength = 10;
-  // products &&
-  // products.reduce((acc, product) => acc + product.reviews.length, 0);
+  products &&
+    products.reduce((acc, product) => acc + product.reviews.length, 0);
 
   const totalRatings = 20;
-  // products &&
-  // products.reduce(
-  //   (acc, product) =>
-  //     acc + product.reviews.reduce((sum, review) => sum + review.rating, 0),
-  //   0
-  // );
+  products &&
+    products.reduce(
+      (acc, product) =>
+        acc + product.reviews.reduce((sum, review) => sum + review.rating, 0),
+      0
+    );
 
   const averageRating = totalRatings / totalReviewsLength || 0;
   return (

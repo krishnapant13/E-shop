@@ -7,7 +7,8 @@ import { RxCross1 } from "react-icons/rx";
 import { Country, State } from "country-state-city";
 import { deleteUserAddress, updatUserAddress } from "../../redux/actions/user";
 
-const UserAddress = () => {
+const UserAddress = ({ active, setActive }) => {
+  console.log(active);
   const [open, setOpen] = useState(false);
   const [country, setCountry] = useState("");
   const [city, setCity] = useState("");
@@ -15,8 +16,17 @@ const UserAddress = () => {
   const [address1, setAddress1] = useState("");
   const [address2, setAddress2] = useState("");
   const [addressType, setAddressType] = useState("");
-  const { user } = useSelector((state) => state.user);
+  const { user, error, successMessage } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch({ type: "clearErrors" });
+    }
+    if (successMessage) {
+      toast.success(successMessage);
+    }
+  }, [error, successMessage]);
 
   const addressTypeData = [
     {
@@ -32,7 +42,6 @@ const UserAddress = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (addressType === "" || country === "" || city === "") {
       toast.error("Please fill all the fields!");
     } else {
@@ -53,6 +62,7 @@ const UserAddress = () => {
       setAddress2("");
       setZipCode(null);
       setAddressType("");
+      setActive(7);
     }
   };
 
@@ -77,7 +87,11 @@ const UserAddress = () => {
               Add New Address
             </h1>
             <div className="w-full">
-              <form onSubmit={handleSubmit} className="w-full">
+              <form
+                onSubmit={handleSubmit}
+                area-required={true}
+                className="w-full"
+              >
                 <div className="w-full block p-4">
                   <div className="w-full pb-2">
                     <label className="block pb-2">Country</label>

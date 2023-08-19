@@ -6,6 +6,7 @@ import { Link, useParams } from "react-router-dom";
 import Ratings from "../Products/Ratings.jsx";
 import { getAllEventsShop } from "../../redux/actions/event";
 import { getAllProductsShop } from "../../redux/actions/product";
+import { backend_url } from "../../server";
 
 const ShopProfileData = ({ isOwner }) => {
   const { products } = useSelector((state) => state.products);
@@ -105,9 +106,9 @@ const ShopProfileData = ({ isOwner }) => {
         <div className="w-full">
           {allReviews &&
             allReviews.map((item, index) => (
-              <div className="w-full flex my-4">
+              <div className="w-full flex my-4" key={index}>
                 <img
-                  src={`${item.user.avatar?.url}`}
+                  src={`${backend_url}/${item.user.avatar}`}
                   className="w-[50px] h-[50px] rounded-full"
                   alt=""
                 />
@@ -117,7 +118,9 @@ const ShopProfileData = ({ isOwner }) => {
                     <Ratings rating={item.rating} />
                   </div>
                   <p className="font-[400] text-[#000000a7]">{item?.comment}</p>
-                  <p className="text-[#000000a7] text-[14px]">{"2days ago"}</p>
+                  <p className="text-[#000000a7] text-[14px]">
+                    {item?.createdAt.slice(0, 10)}
+                  </p>
                 </div>
               </div>
             ))}

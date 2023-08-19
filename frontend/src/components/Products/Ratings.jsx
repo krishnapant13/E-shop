@@ -4,13 +4,15 @@ import { BsStarHalf } from "react-icons/bs";
 
 const Ratings = ({ rating }) => {
   const stars = [];
+
   for (let i = 1; i <= 5; i++) {
     if (i <= rating) {
       stars.push(
         <AiFillStar
           key={i}
           size={20}
-          className="star filled mr-2 cursor-pointer"
+          color="#f6b100"
+          className="mr-2 cursor-pointer"
         />
       );
     } else if (i === Math.ceil(rating) && !Number.isInteger(rating)) {
@@ -18,7 +20,8 @@ const Ratings = ({ rating }) => {
         <BsStarHalf
           key={i}
           size={17}
-          className="star half-filled mr-2 cursor-pointer"
+          color="#f6ba00"
+          className="mr-2 cursor-pointer"
         />
       );
     } else {
@@ -26,7 +29,8 @@ const Ratings = ({ rating }) => {
         <AiOutlineStar
           key={i}
           size={20}
-          className="star empty mr-2 cursor-pointer"
+          color="#f6ba00"
+          className="mr-2 cursor-pointer"
         />
       );
     }

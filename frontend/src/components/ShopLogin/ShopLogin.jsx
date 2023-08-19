@@ -31,9 +31,9 @@ const ShopLogin = () => {
       });
   };
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-r from-blue-900 via-purple to-black flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+        <h2 className="mt-6 text-center text-3xl font-extrabold text-white">
           Login to your shop
         </h2>
       </div>
@@ -119,7 +119,7 @@ const ShopLogin = () => {
             <div>
               <button
                 type="submit"
-                className="group relative w-full h=[40px] flex justify-center py-2 px-4 border border-trasparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+                className="group relative w-full h-[40px] flex justify-center py-2 px-4 border border-trasparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
               >
                 Submit
               </button>

@@ -22,8 +22,8 @@ import Ratings from "./Ratings";
 import ZoomedImage from "./ZoomedImage";
 
 const ProductsDetails = ({ data }) => {
-  const { wishlist } = useSelector((state) => state.wishlist) ;
-  const { cart } = useSelector((state) => state.cart) ;
+  const { wishlist } = useSelector((state) => state.wishlist);
+  const { cart } = useSelector((state) => state.cart);
   const { user, isAuthenticated } = useSelector((state) => state.user);
   const { products } = useSelector((state) => state.products);
   const [count, setCount] = useState(1);
@@ -76,17 +76,17 @@ const ProductsDetails = ({ data }) => {
     }
   };
 
-  const totalReviewsLength = 2;
-  // products &&
-  // products.reduce((acc, product) => acc + product.reviews.length, 0);
+  const totalReviewsLength =
+    products &&
+    products.reduce((acc, product) => acc + product.reviews.length, 0);
 
-  const totalRatings = 2;
-  // products &&
-  // products.reduce(
-  //   (acc, product) =>
-  //     acc + product.reviews.reduce((sum, review) => sum + review.rating, 0),
-  //   0
-  // );
+  const totalRatings =
+    products &&
+    products.reduce(
+      (acc, product) =>
+        acc + product.reviews.reduce((sum, review) => sum + review.rating, 0),
+      0
+    );
 
   const avg = totalRatings / totalReviewsLength || 0;
 
@@ -313,33 +313,31 @@ const ProductDetailsInfo = ({
         </>
       ) : null}
 
-      {active === 2 ? (
-        // <div className="w-full min-h-[40vh] flex flex-col items-center py-3 overflow-y-scroll">
-        //   {data &&
-        //     data.reviews.map((item, index) => (
-        //       <div className="w-full flex my-2">
-        //         <img
-        //           src={`${item.user.avatar?.url}`}
-        //           alt=""
-        //           className="w-[50px] h-[50px] rounded-full"
-        //         />
-        //         <div className="pl-2 ">
-        //           <div className="w-full flex items-center">
-        //             <h1 className="font-[500] mr-3">{item.user.name}</h1>
-        //             <Ratings rating={data?.ratings} />
-        //           </div>
-        //           <p>{item.comment}</p>
-        //         </div>
-        //       </div>
-        //     ))}
+      {active === 2 && (
+        <div className="w-full min-h-[40vh] flex flex-col items-center py-3 overflow-y-scroll">
+          {data &&
+            data.reviews.map((item, index) => (
+              <div className="w-full flex my-2">
+                <img
+                  src={`${backend_url}/${item.user.avatar}`}
+                  alt=""
+                  className="w-[50px] h-[50px] rounded-full"
+                />
+                <div className="pl-2 ">
+                  <div className="w-full flex items-center">
+                    <h1 className="font-[500] mr-3">{item.user.name}</h1>
+                    <Ratings rating={data?.ratings} />
+                  </div>
+                  <p>{item.comment}</p>
+                </div>
+              </div>
+            ))}
 
-        <div className="w-full flex justify-center items-center m-5">
-          {/* {data && data.reviews.length === 0 && ( */}
-          <h5>No Reviews Yet!</h5>
+          <div className="w-full flex justify-center">
+            {data && data.reviews.length === 0 && <h5>No Reviews Yet!</h5>}
+          </div>
         </div>
-      ) : // </div>
-      null}
-
+      )}
       {active === 3 && (
         <div className="w-full block 800px:flex p-5">
           <div className="w-full 800px:w-[50%]">

@@ -5,6 +5,7 @@ import { categoriesData } from "../../static/data";
 import { AiOutlineCloseCircle, AiOutlinePlusCircle } from "react-icons/ai";
 import { createProduct } from "../../redux/actions/product";
 import { toast } from "react-toastify";
+
 const CreateProduct = () => {
   const { seller } = useSelector((state) => state.seller);
   const { success, error } = useSelector((state) => state.products);
@@ -188,12 +189,12 @@ const CreateProduct = () => {
                     alt=""
                     className="h-[110px] w-[110px] object-cover m-2"
                   />
-                  <button
+                  <AiOutlineCloseCircle
                     onClick={() => handleRemoveImage(index)}
-                    className="absolute top-0 right-0 p-1 bg-white rounded-full shadow"
-                  >
-                    <AiOutlineCloseCircle size={18} color="black" />
-                  </button>
+                    className="absolute top-0 right-0 p-1 bg-white rounded-full cursor-pointer shadow"
+                    size={25}
+                    color="black"
+                  />
                 </div>
               ))}{" "}
             <label htmlFor="upload">

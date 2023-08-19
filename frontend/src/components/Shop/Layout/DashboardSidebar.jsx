@@ -62,7 +62,7 @@ const sidebarItems = [
     text: "Refunds",
   },
   {
-    to: "/dashboard-settings",
+    to: "/settings",
     icon: CiSettings,
     text: "Settings",
   },
@@ -70,7 +70,7 @@ const sidebarItems = [
 
 const DashboardSidebar = ({ active }) => {
   return (
-    <div className="w-full h-[89vh] bg-white shadow-sm overflow-y-scroll sticky top-0 left-0 z-10">
+    <div className="w-full h-[89.5vh] bg-white shadow-sm overflow-y-scroll sticky top-0 left-0 z-10">
       {sidebarItems.map((item, index) => (
         <DashboardSidebarItem
           key={index}

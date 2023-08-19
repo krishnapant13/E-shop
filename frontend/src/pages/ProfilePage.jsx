@@ -6,6 +6,10 @@ import ProfileContent from "../components/Profile/ProfileContent.jsx";
 
 const ProfilePage = () => {
   const [active, setActive] = useState(1);
+  const handleSetActive = (index) => {
+    setActive(index);
+  };
+
   return (
     <div>
       <Header />
@@ -13,7 +17,7 @@ const ProfilePage = () => {
         <div className="w-[50px] 800px:w-[335px] sticky 800px:mt-0 mt-[50%] ">
           <ProfileSideBar active={active} setActive={setActive} />
         </div>
-        <ProfileContent active={active} />
+        <ProfileContent active={active} setActive={handleSetActive} />
       </div>
     </div>
   );

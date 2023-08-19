@@ -143,7 +143,7 @@ const AllCoupons = () => {
             autoHeight
           />
           {open && (
-            <div className="fixed top-0 left-0 w-full h-screen bg-[#00000062] z-[20000] flex items-center justify-center">
+            <div className="fixed top-0 left-0 w-full h-screen bg-[#00000062] z-[20] flex items-center justify-center">
               <div className="w-[90%] 800px:w-[60%] h-[85vh] bg-white rounded-md shadow p-4 overflow-y-scroll">
                 <div className="w-full flex justify-end">
                   <RxCross1

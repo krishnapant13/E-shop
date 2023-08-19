@@ -39,7 +39,8 @@ export const userReducer = createReducer(initialState, {
   },
   updateUserAddressSuccess: (state, action) => {
     state.loading = false;
-    state.user = action.payload;
+    state.successMessage = action.payload;
+    state.user = action.payload.user;
   },
   updateUserAddressFailed: (state, action) => {
     state.loading = false;

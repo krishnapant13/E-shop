@@ -3,7 +3,7 @@ import ProfileSection from "./ProfileSection.jsx";
 import AllOrders from "./AllOrders.jsx";
 import AllRefundOrders from "./AllRefundOrders.jsx";
 import TrackOrder from "./TrackOrder.jsx";
-import PaymentMethods from "./PaymentMethods.jsx";
+import UpdatePassword from "./UpdatePassword.jsx";
 import UserAddress from "./UserAddress.jsx";
 
 const ProfileContent = ({ active }) => {
@@ -18,7 +18,7 @@ const ProfileContent = ({ active }) => {
       {/* Track order  */}
       {active === 5 && <TrackOrder />}
       {/*Payment Methods*/}
-      {active === 6 && <PaymentMethods />}
+      {active === 6 && <UpdatePassword />}
       {/*Address*/}
       {active === 7 && <UserAddress />}
     </div>

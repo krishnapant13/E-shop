@@ -9,16 +9,28 @@ import Sponsers from "../components/Route/Sponsers.jsx";
 import Footer from "../components/Layout/Footer.jsx";
 const HomePage = () => {
   return (
-    <div>
-      <Header activeHeading={1} />
-      <Hero />
-      <Categories />
-      <BestDeals />
-      <Events />
-      <FeatureProducts />
-      <Sponsers />
-      <Footer/>
-    </div>
+    <>
+      <div
+        className=" w-full bg-no-repeats h-screen bg-cover"
+        style={{
+          backgroundImage:
+            "url(https://images.unsplash.com/photo-1509023464722-18d996393ca8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80)",
+          // https://images.unsplash.com/photo-1506806732259-39c2d0268443?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=872&q=80
+          // https://images.unsplash.com/photo-1506806770414-b0e5db562f56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=872&q=80
+        }}
+      >
+        <Header activeHeading={1} />
+        <Hero />
+      </div>
+      <div>
+        <Categories />
+        <BestDeals />
+        <Events />
+        <FeatureProducts />
+        <Sponsers />
+        <Footer />
+      </div>
+    </>
   );
 };
 

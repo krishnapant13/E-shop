@@ -1,9 +1,39 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styles from "../../styles/styles";
 import CountDown from "../CountDown/CoutDown.jsx";
 import { backend_url } from "../../server";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { addTocart } from "../../redux/actions/cart";
 
 const EventCard = ({ active, data }) => {
+  const [itemExists, setItemExists] = useState(false);
+  const { cart } = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (cart && cart.find((i) => i._id === data._id)) {
+      setItemExists(true);
+    } else {
+      setItemExists(false);
+    }
+  }, [cart]);
+  const addToCartHandler = (id) => {
+    const isItemExists = cart && cart.find((i) => i._id === id);
+    if (isItemExists) {
+      setItemExists(true);
+      toast.error("Item already in cart!");
+    } else {
+      setItemExists(false);
+      if (data.stock < 1) {
+        toast.error("Product stock limited!");
+      } else {
+        const cartData = { ...data, qty: 1 };
+        dispatch(addTocart(cartData));
+        toast.success("Item added to cart successfully!");
+      }
+    }
+  };
   return (
     <div
       className={`w-full block bg-white h-auto ${
@@ -33,6 +63,28 @@ const EventCard = ({ active, data }) => {
             </span>
           </div>
           <CountDown data={data} />
+          <br />
+          <div className="flex items-center ">
+            <Link to={`/product/${data._id}?isEvent=true`}>
+              <div
+                className={`${styles.button} !rounded-[4px] bg-gradient-to-r
+            from-blue-900
+            via-purple
+            to-black text-[#fff]`}
+              >
+                See Details
+              </div>
+            </Link>
+            <div
+              className={`${styles.button} !rounded-[4px] text-[#fff] ml-5  bg-gradient-to-r
+              from-blue-900
+              via-purple
+              to-black`}
+              onClick={() => addToCartHandler(data)}
+            >
+              Add to cart
+            </div>
+          </div>
         </div>
       )}
     </div>

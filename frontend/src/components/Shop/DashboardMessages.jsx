@@ -1,7 +1,8 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
-import { server } from "../../server";
-import { useSelector } from "react-redux";
+import React, { useRef, useState } from "react";
+import { useEffect } from "react";
+import { backend_url, server } from "../../server";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineArrowRight, AiOutlineSend } from "react-icons/ai";
 import { TfiGallery } from "react-icons/tfi";
@@ -12,14 +13,18 @@ const ENDPOINT = "http://localhost:4000";
 const socketId = socketIO(ENDPOINT, { transports: ["websocket"] });
 
 const DashboardMessages = () => {
-  const { seller } = useSelector((state) => state.seller);
+  const { seller, isLoading } = useSelector((state) => state.seller);
   const [conversation, setConversation] = useState([]);
-  const [open, setOpen] = useState(false);
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [messages, setMessages] = useState([]);
-  const [currentChat, setCurrentChat] = useState(null);
-  const [newMessage, setNewMessage] = useState("");
+  const [currentChat, setCurrentChat] = useState();
   const [userData, setUserData] = useState(null);
+  const [newMessage, setNewMessage] = useState("");
+  const [onlineUsers, setOnlineUsers] = useState([]);
+  const [activeStatus, setActiveStatus] = useState(false);
+  const [images, setImages] = useState();
+  const [open, setOpen] = useState(false);
+  const scrollRef = useRef(null);
 
   useEffect(() => {
     socketId.on("getMessage", (data) => {
@@ -30,11 +35,13 @@ const DashboardMessages = () => {
       });
     });
   }, []);
+
   useEffect(() => {
     arrivalMessage &&
       currentChat?.members.includes(arrivalMessage.sender) &&
       setMessages((prev) => [...prev, arrivalMessage]);
   }, [arrivalMessage, currentChat]);
+
   useEffect(() => {
     axios
       .get(`${server}/conversation/get-all-conversation-seller/${seller._id}`, {
@@ -47,14 +54,32 @@ const DashboardMessages = () => {
         console.log(error);
       });
   }, [seller]);
+
+  useEffect(() => {
+    if (seller) {
+      //userId because i have used in socket server
+      const userId = seller._id;
+      socketId.emit("addUser", userId);
+      socketId.on("getUsers", (data) => {
+        setOnlineUsers(data);
+      });
+    }
+  }, [seller]);
+
+  const onlineUsersCheck = (chat) => {
+    const chatMembers = chat.members.find((member) => member !== seller._id);
+    const online = onlineUsers.find((user) => user.userId === chatMembers);
+    return online ? true : false;
+  };
+
   //get all messages
   useEffect(() => {
     const getMessage = async () => {
       try {
-        const response = axios.get(
-          `${server}/message/get-all-messages/${currentChat._id}`
+        const response = await axios.get(
+          `${server}/message/get-all-messages/${currentChat?._id}`
         );
-        setMessages(response.data.message);
+        setMessages(response.data.messages);
       } catch (error) {
         console.log(error);
       }
@@ -131,6 +156,8 @@ const DashboardMessages = () => {
                 me={seller._id}
                 userData={userData}
                 setUserData={setUserData}
+                online={onlineUsersCheck(item)}
+                setActiveStatus={setActiveStatus}
               />
             ))}
         </>
@@ -143,11 +170,14 @@ const DashboardMessages = () => {
           sendMessageHandler={sendMessageHandler}
           messages={messages}
           sellerId={seller._id}
+          userData={userData}
+          activeStatus={activeStatus}
         />
       )}
     </div>
   );
 };
+
 const MessageList = ({
   data,
   index,
@@ -156,10 +186,14 @@ const MessageList = ({
   me,
   userData,
   setUserData,
+  online,
+  setActiveStatus,
 }) => {
   const navigate = useNavigate();
   const [active, setActive] = useState(0);
+
   useEffect(() => {
+    setActiveStatus(online);
     const userId = data.members.find((user) => user !== me);
     const getUser = async () => {
       try {
@@ -175,7 +209,7 @@ const MessageList = ({
     navigate(`?${id}`);
     setOpen(true);
   };
-  console.log(userData.name);
+
   return (
     <div
       className={`w-full flex p-3 px-3 ${
@@ -187,15 +221,24 @@ const MessageList = ({
     >
       <div className="relative">
         <img
-          src="http://localhost:3000/static/media/logo.11feb78e9bf4464c112c.jpeg"
+          src={`${backend_url}${userData?.avatar}`}
           alt=""
           className="h-[50px] w-[50px] rounded-full"
         />{" "}
-        <div className=" absolute rounded-full bg-green-400 w-[10px] h-[10px] top-[2px] right-[2px]" />
+        <div
+          className={` absolute rounded-full ${
+            online ? "bg-green-400" : "bg-red-400"
+          } w-[10px] h-[10px] top-[2px] right-[2px]`}
+        />
       </div>
       <div className="pl-3 ">
-        <h1 className=" text-[18px]">{userData.name}</h1>
-        <p className="text-[16px] text-white"> You: Dramatic isn't it?</p>
+        <h1 className=" text-[18px]">{userData?.name}</h1>
+        <p className="text-[16px] text-white">
+          {data.lastMessageId !== userData?._id
+            ? "You: "
+            : userData?.name.split("")[0] + ": "}
+          {data?.lastMessage}
+        </p>
       </div>
     </div>
   );
@@ -208,20 +251,22 @@ const SellerInbox = ({
   sendMessageHandler,
   messages,
   sellerId,
+  userData,
+  activeStatus,
 }) => {
   return (
     <div className="w-full min-h-full flex flex-col justify-between">
       {/* message header */}
       <div className="w-full flex p-3 items-center justify-between bg-slate-500">
-        <div className="flex">
+        <div className="flex items-center">
           <img
-            src="http://localhost:3000/static/media/logo.11feb78e9bf4464c112c.jpeg"
+            src={`${backend_url}${userData?.avatar}`}
             alt=""
             className="w-[60px] h-[60px] rounded-full "
           />
           <div className="pl-3">
-            <h1 className="text-[18px] font-[600]">Krishna pant</h1>
-            <h1>Active Now</h1>
+            <h1 className="text-[18px] font-[600]">{userData?.name}</h1>
+            <h1>{activeStatus ? "Active Now" : null}</h1>
           </div>
         </div>{" "}
         <AiOutlineArrowRight

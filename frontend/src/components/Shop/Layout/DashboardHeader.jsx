@@ -15,14 +15,16 @@ const DashboardHeader = () => {
     setWelcomeText(false);
   }, 5000);
   return (
-    <div className="w-full h=[80px] bg-gradient-to-r from-orange-900 via-white to-green-700 shadow sticky top-0 left-0 z-30 flex items-center justify-between px-4 ">
+    <div className="w-full h-[80px] bg-gradient-to-r from-purpule-900 via-black to-yellow-400 shadow sticky top-0 left-0 z-30 flex items-center justify-between px-4 ">
       <div className="w-[5.5%] m-2">
         <Link to="/dashboard">
           <img className="rounded-full " src={logo} alt=""></img>
         </Link>
       </div>
       {welcomeText && (
-        <h3 className={`font-[500] text-[30px] font-Poppins text-left `}>
+        <h3
+          className={`font-[500] text-[30px] text-white font-Poppins text-left `}
+        >
           Welcome to {seller.name}
         </h3>
       )}

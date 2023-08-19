@@ -17,7 +17,7 @@ const SuggestedProduct = ({ data }) => {
       {data && (
         <div className={`${styles.section} p-4`}>
           <h2
-            className={`${styles.heading} text-[25px] font-[500] border-b mb-5`}
+            className={`${styles.heading} text-[25px] font-[500] border-b mb-5 text-white`}
           >
             Related Products
           </h2>
