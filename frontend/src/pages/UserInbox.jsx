@@ -1,15 +1,14 @@
-import axios from "axios";
-import React, { useRef, useState } from "react";
-import { useEffect } from "react";
-import { server, backend_url } from "../server";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { AiOutlineArrowRight, AiOutlineSend } from "react-icons/ai";
-import { TfiGallery } from "react-icons/tfi";
+import React, { useState, useRef, useEffect } from "react";
+import Header from "../components/Layout/Header";
 import styles from "../styles/styles";
 import socketIO from "socket.io-client";
-import Header from "../components/Layout/Header";
 import { format } from "timeago.js";
+import { useNavigate } from "react-router-dom";
+import { backend_url, server } from "../server";
+import { useSelector } from "react-redux";
+import axios from "axios";
+import { AiOutlineArrowRight, AiOutlineSend } from "react-icons/ai";
+import { TfiGallery } from "react-icons/tfi";
 const ENDPOINT = "http://localhost:4000";
 const socketId = socketIO(ENDPOINT, { transports: ["websocket"] });
 
@@ -140,44 +139,41 @@ const UserInbox = () => {
   return (
     <div className="w-full">
       <Header />
-      <div className="w-[90%] bg-white m-3 h-[85vh] overflow-y-scroll rounded">
-        {/* {allMessageslist} */}
-        {!open && (
-          <>
-            {" "}
-            <h1 className="text-center text-[30px] font-[400] font-Poppins py-3">
-              All messages
-            </h1>
-            {conversation &&
-              conversation.map((item, index) => (
-                <MessageList
-                  data={item}
-                  key={index}
-                  index={index}
-                  setOpen={setOpen}
-                  setCurrentChat={setCurrentChat}
-                  me={user._id}
-                  userData={userData}
-                  setUserData={setUserData}
-                  online={onlineUsersCheck(item)}
-                  setActiveStatus={setActiveStatus}
-                />
-              ))}
-          </>
-        )}
-        {open && (
-          <userInbox
-            setOpen={setOpen}
-            newMessage={newMessage}
-            setNewMessage={setNewMessage}
-            sendMessageHandler={sendMessageHandler}
-            messages={messages}
-            userId={user._id}
-            userData={userData}
-            activeStatus={activeStatus}
-          />
-        )}
-      </div>
+      {!open && (
+        <>
+          {" "}
+          <h1 className="text-center text-[30px] font-[400] font-Poppins py-3">
+            All messages
+          </h1>
+          {conversation &&
+            conversation.map((item, index) => (
+              <MessageList
+                data={item}
+                key={index}
+                index={index}
+                setOpen={setOpen}
+                setCurrentChat={setCurrentChat}
+                me={user._id}
+                userData={userData}
+                setUserData={setUserData}
+                online={onlineUsersCheck(item)}
+                setActiveStatus={setActiveStatus}
+              />
+            ))}
+          {open && (
+            <SellerInbox
+              setOpen={setOpen}
+              newMessage={newMessage}
+              setNewMessage={setNewMessage}
+              sendMessageHandler={sendMessageHandler}
+              messages={messages}
+              userId={user._id}
+              userData={userData}
+              activeStatus={activeStatus}
+            />
+          )}
+        </>
+      )}
     </div>
   );
 };
@@ -209,6 +205,7 @@ const MessageList = ({
     };
     getUser();
   }, [me, data]);
+
   const handleClick = (id) => {
     navigate(`?${id}`);
     setOpen(true);
@@ -248,7 +245,7 @@ const MessageList = ({
   );
 };
 
-const userInbox = ({
+const SellerInbox = ({
   setOpen,
   newMessage,
   setNewMessage,
