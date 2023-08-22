@@ -9,7 +9,7 @@ import Sponsers from "../components/Route/Sponsers.jsx";
 import Footer from "../components/Layout/Footer.jsx";
 const HomePage = () => {
   return (
-    <>
+    <div className="bg-gradient-to-b from-gray-900 to-black">
       <div
         className=" w-full bg-no-repeats h-screen bg-cover"
         style={{
@@ -22,7 +22,7 @@ const HomePage = () => {
         <Header activeHeading={1} />
         <Hero />
       </div>
-      <div>
+      <div className="bg-gradient-to-b from-gray-900 to-black">
         <Categories />
         <BestDeals />
         <Events />
@@ -30,7 +30,7 @@ const HomePage = () => {
         <Sponsers />
         <Footer />
       </div>
-    </>
+    </div>
   );
 };
 

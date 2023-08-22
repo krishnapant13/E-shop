@@ -102,7 +102,7 @@ const Header = ({ activeHeading }) => {
         className={`${
           active === true
             ? "shadow-sm fixed top-0 left-0 z-10 bg-gradient-to-r from-blue-900 via-purple to-black"
-            : null
+            : "bg-slate-400"
         } transition hidden 800px:flex items-center justify-between w-full   h-[70px]`}
       >
         <div
@@ -244,9 +244,9 @@ const Header = ({ activeHeading }) => {
           <div>
             <Link to="/">
               <img
-                src="https://shopo.quomodothemes.website/assets/images/logo.svg"
+                src="http://localhost:3000/static/media/logo.11feb78e9bf4464c112c.jpeg"
                 alt=""
-                className="mt-3 cursor-pointer"
+                className="mt-3 cursor-pointer w-[40px] h-[40px] rounded-full"
               />
             </Link>
           </div>

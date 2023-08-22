@@ -5,9 +5,11 @@ import { Link } from "react-router-dom";
 import Drowpdown from "./Drowpdown";
 
 import { categoriesData } from "../../static/data";
-import { IoIosArrowDown } from "react-icons/io";
+import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
+import { useSelector } from "react-redux";
 
 const NavBar = ({ active }) => {
+  const { user } = useSelector((state) => state.user);
   const [dropDown, setDropDown] = useState(false);
 
   return (
@@ -20,7 +22,7 @@ const NavBar = ({ active }) => {
               to={i.url}
               className={`${
                 active === index + 1
-                  ? "text-[#17dd1f]"
+                  ? "text-[#191330]"
                   : "text-block 800px:text-[#fff]"
               } pb-[20px] 800px:pb-0 font-[500] px-6 cursor-pointer `}
             >
@@ -53,7 +55,18 @@ const NavBar = ({ active }) => {
             />
           ) : null}
         </div>
-      </div>
+      </div>{" "}
+      {user && user.role === "Admin" && (
+        <div
+          className={`${styles.adminButton} ml-[100px] p-1  text-[12px] !rounded-[4px]`}
+        >
+          <Link to="/admin-dashboard">
+            <h1 className="text-[#fff] flex items-center">
+              Admin Dashboard <IoIosArrowForward className="ml-1" />
+            </h1>
+          </Link>
+        </div>
+      )}
     </div>
   );
 };

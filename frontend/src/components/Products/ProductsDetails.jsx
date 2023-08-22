@@ -118,41 +118,37 @@ const ProductsDetails = ({ data }) => {
       {data ? (
         <div className={`${styles.section} w-[90%] 800px:w-[70%]`}>
           <div className="w-full py-5">
-            <div className="block w-full 800px:flex">
-              <div className="w-full 800px:w-[50%]">
-                <img
-                  src={`${backend_url}${data && data.images[select]}`}
-                  alt=""
-                  className="w-[80%]"
-                />
-                {/* <ZoomedImage
-                  image={`${backend_url}${data && data.images[select]}`}
-                  previewImage={`${backend_url}${data && data.images[select]}`}
-                /> */}
-
-                <div className="w-full flex ">
+            <div className="block m-auto w-full 800px:flex">
+              <div className="w-full">
+                {data && (
+                  <div className="w-full flex justify-center mt-3">
+                    <img
+                      src={`${backend_url}${data.images[select]}`}
+                      alt=""
+                      className="w-[80%] max-w-screen-md"
+                    />
+                  </div>
+                )}
+                <div className="flex w-full mt-2 flex-wrap justify-center items-center">
                   {data &&
                     data.images.map((i, index) => (
                       <div
-                        className={`${
-                          select === 0 ? "border" : "null"
-                        } cursor-pointer`}
+                        key={index}
+                        className={`w-1/4 sm:w-1/6 md:w-1/4 cursor-pointer`}
                       >
                         <img
                           src={`${backend_url}${i}`}
                           alt=""
-                          className="h-[200px] overflow-hidden mr-3 mt-3"
+                          className={`w-full h-auto ${
+                            select === index ? "border" : ""
+                          }`}
                           onClick={() => setSelect(index)}
                         />
                       </div>
                     ))}
-                  <div
-                    className={`${
-                      select === 1 ? "border" : "null"
-                    } cursor-pointer`}
-                  ></div>
                 </div>
               </div>
+
               <div className="w-full 800px:w-[50%] pt-5">
                 <h1 className={`${styles.productTitle}`}>{data.name}</h1>
                 <p>{data.description}</p>
@@ -256,7 +252,7 @@ const ProductsDetails = ({ data }) => {
 };
 
 const ProductDetailsInfo = ({
-  data,
+  data, 
   products,
   totalReviewsLength,
   averageRating,

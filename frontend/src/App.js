@@ -20,7 +20,7 @@ import {
   PaymentPage,
   OrderDetailsPage,
   TrackOrderPage,
-  UserInbox
+  UserInbox,
 } from "./routes/Routes";
 import {
   ShopDashboardPage,
@@ -49,9 +49,23 @@ import { getAllProducts } from "./redux/actions/product";
 import { getAllEvents } from "./redux/actions/event";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
+import NetworkCheck from "./components/Layout/NetworkCheck";
+import {
+  AdminDashboardPage,
+  AdminDashboardUsers,
+  AdminDashboardSellers,
+  AdminDashboardOrders,
+  AdminDashboardProducts,
+  AdminDashboardEvents,
+  AdminDashboardWithdraw,
+} from "./routes/AdminProtectedRoute";
+
+import ProtectedARoute from "./routes/ProtectedARoutes";
 
 const App = () => {
   const [stripeApikey, setStripeApiKey] = useState("");
+  const [isNetworkError, setIsNetworkError] = useState(false); // Add the state
+
   const [key, setKey] = useState(null);
   async function getStripeApiKey() {
     const { data } = await axios.get(`${server}/payment/stripeapikey`);
@@ -63,6 +77,17 @@ const App = () => {
     Store.dispatch(getAllProducts());
     Store.dispatch(getAllEvents());
     getStripeApiKey();
+    const handleNetworkChange = () => {
+      setIsNetworkError(!navigator.onLine);
+    };
+
+    window.addEventListener("online", handleNetworkChange);
+    window.addEventListener("offline", handleNetworkChange);
+
+    return () => {
+      window.removeEventListener("online", handleNetworkChange);
+      window.removeEventListener("offline", handleNetworkChange);
+    };
   }, []);
   useEffect(() => {
     if (stripeApikey) {
@@ -86,6 +111,9 @@ const App = () => {
           </Routes>
         </Elements>
       )}
+      {isNetworkError && <NetworkCheck />}{" "}
+      {/* Render the popup if there's a network error */}
+      {/* ...other routes and components */}
       <Routes>
         {/* user routes */}
         <Route path="/" element={<HomePage />} />
@@ -252,11 +280,68 @@ const App = () => {
             </SellerProtectedRoute>
           }
         />
+        {/* admin routes  */}
+        <Route
+          path="/admin-dashboard"
+          element={
+            <ProtectedARoute>
+              <AdminDashboardPage />
+            </ProtectedARoute>
+          }
+        />{" "}
+        <Route
+          path="/admin-users"
+          element={
+            <ProtectedARoute>
+              <AdminDashboardUsers />
+            </ProtectedARoute>
+          }
+        />
+        <Route
+          path="/admin-sellers"
+          element={
+            <ProtectedARoute>
+              <AdminDashboardSellers />
+            </ProtectedARoute>
+          }
+        />
+        <Route
+          path="/admin-orders"
+          element={
+            <ProtectedARoute>
+              <AdminDashboardOrders />
+            </ProtectedARoute>
+          }
+        />
+        <Route
+          path="/admin-products"
+          element={
+            <ProtectedARoute>
+              <AdminDashboardProducts />
+            </ProtectedARoute>
+          }
+        />
+        <Route
+          path="/admin-events"
+          element={
+            <ProtectedARoute>
+              <AdminDashboardEvents />
+            </ProtectedARoute>
+          }
+        />
+        {/*  <Route
+          path="/admin-withdraw-request"
+          element={
+            <ProtectedARoute>
+              <AdminDashboardWithdraw />
+            </ProtectedARoute>
+          }
+        /> */}
       </Routes>
       <ToastContainer
-        position="bottom-center"
-        autoClose={5000}
-        hideProgressBar={false}
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar={true}
         newestOnTop={false}
         closeOnClick
         rtl={false}

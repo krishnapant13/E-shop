@@ -21,9 +21,11 @@ const addUser = (userId, socketId) => {
   !users.some((user) => user.userId === userId) &&
     users.push({ userId, socketId });
 };
+
 const removeUser = (socketId) => {
   users = users.filter((user) => user.socketId !== socketId);
 };
+
 const getUser = (receiverId) => {
   return users.find((user) => user.userId === receiverId);
 };
@@ -36,6 +38,7 @@ const createMessage = ({ senderId, receiverId, text, images }) => ({
   images,
   seen: false,
 });
+
 io.on("connection", (socket) => {
   //when the client connects to the server it will emit this event and we can use that to send messages to all clients connected in real time
   console.log("user is connected");
@@ -44,6 +47,7 @@ io.on("connection", (socket) => {
     addUser(userId, socket.id);
     io.emit("getUsers", users);
   });
+
   //   send and get message
   const messages = {}; //object to track messgae sent to a user
   socket.on("sendMessage", ({ senderId, receiverId, text, images }) => {
@@ -80,6 +84,7 @@ io.on("connection", (socket) => {
       }
     }
   });
+  
   // update the messages and get the last send message
   socket.on("updateLastMessage", ({ lastMessage, lastMessageId }) => {
     io.emit("getLastMessage", {

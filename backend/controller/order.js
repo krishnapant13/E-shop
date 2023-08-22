@@ -5,7 +5,7 @@ const Shop = require("../model/shop");
 const Product = require("../model/product");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const ErrorHandler = require("../utills/ErrorHandler");
-const { isSeller, isAuthenticated } = require("../middleware/auth");
+const { isSeller, isAuthenticated, isAdmin } = require("../middleware/auth");
 
 // create new order
 router.post(
@@ -211,25 +211,25 @@ router.put(
   })
 );
 
-// // all orders --- for admin
-// router.get(
-//   "/admin-all-orders",
-//   isAuthenticated,
-//   isAdmin("Admin"),
-//   catchAsyncErrors(async (req, res, next) => {
-//     try {
-//       const orders = await Order.find().sort({
-//         deliveredAt: -1,
-//         createdAt: -1,
-//       });
-//       res.status(201).json({
-//         success: true,
-//         orders,
-//       });
-//     } catch (error) {
-//       return next(new ErrorHandler(error.message, 500));
-//     }
-//   })
-// );
+// all orders --- for admin
+router.get(
+  "/admin-all-orders",
+  isAuthenticated,
+  isAdmin("Admin"),
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const orders = await Order.find().sort({
+        deliveredAt: -1,
+        createdAt: -1,
+      });
+      res.status(201).json({
+        success: true,
+        orders,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
 
 module.exports = router;

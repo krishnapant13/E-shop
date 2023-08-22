@@ -29,8 +29,8 @@ const DashboardMessages = () => {
   useEffect(() => {
     socketId.on("getMessage", (data) => {
       setArrivalMessage({
-        sender: data.senderId,
-        text: data.text,
+        sender: data?.senderId,
+        text: data?.text,
         createdAt: Date.now(),
       });
     });
@@ -136,6 +136,11 @@ const DashboardMessages = () => {
         console.log(error);
       });
   };
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ beahaviour: "smooth" });
+  }, [messages]);
+
   return (
     <div className="w-[90%] bg-white m-3 h-[85vh] overflow-y-scroll rounded">
       {/* {allMessageslist} */}
@@ -172,6 +177,7 @@ const DashboardMessages = () => {
           sellerId={seller._id}
           userData={userData}
           activeStatus={activeStatus}
+          scrollRef={scrollRef}
         />
       )}
     </div>
@@ -191,6 +197,7 @@ const MessageList = ({
 }) => {
   const navigate = useNavigate();
   const [active, setActive] = useState(0);
+  const [user, setUser] = useState([]);
 
   useEffect(() => {
     setActiveStatus(online);
@@ -198,7 +205,7 @@ const MessageList = ({
     const getUser = async () => {
       try {
         const res = await axios.get(`${server}/user/user-info/${userId}`);
-        setUserData(res.data.user);
+        setUser(res.data.user);
       } catch (error) {
         console.log(error);
       }
@@ -216,12 +223,16 @@ const MessageList = ({
         active === index ? "bg-[#1b575f]" : "bg-transparent"
       } cursor-pointer`}
       onClick={(e) =>
-        setActive(index) || handleClick(data._id) || setCurrentChat(data)
+        setActive(index) ||
+        handleClick(data?._id) ||
+        setCurrentChat(data) ||
+        setUserData(data) ||
+        setActiveStatus(online)
       }
     >
       <div className="relative">
         <img
-          src={`${backend_url}${userData?.avatar}`}
+          src={`${backend_url}${user?.avatar}`}
           alt=""
           className="h-[50px] w-[50px] rounded-full"
         />{" "}
@@ -232,11 +243,11 @@ const MessageList = ({
         />
       </div>
       <div className="pl-3 ">
-        <h1 className=" text-[18px]">{userData?.name}</h1>
+        <h1 className=" text-[18px]">{user?.name}</h1>
         <p className="text-[16px] text-white">
-          {data.lastMessageId !== userData?._id
+          {data?.lastMessageId !== user?._id
             ? "You: "
-            : userData?.name.split("")[0] + ": "}
+            : user?.name.split("")[0] + ": "}
           {data?.lastMessage}
         </p>
       </div>
@@ -253,6 +264,7 @@ const SellerInbox = ({
   sellerId,
   userData,
   activeStatus,
+  scrollRef = { scrollRef },
 }) => {
   return (
     <div className="w-full min-h-full flex flex-col justify-between">
@@ -283,6 +295,7 @@ const SellerInbox = ({
               className={`w-full flex my-2 ${
                 item.sender === sellerId ? "justify-end" : "justify-start"
               }`}
+              ref={scrollRef}
             >
               {item.sender !== sellerId && (
                 <img

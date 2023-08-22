@@ -5,7 +5,7 @@ import Footer from "../components/Layout/Footer";
 
 const OrderDetailsPage = () => {
   return (
-    <div>
+    <div className=" bg-gradient-to-t from-slate-200 via-slate-600 to-zinc-700 ">
       <Header />
       <UserOrderDetails />
       <Footer />
